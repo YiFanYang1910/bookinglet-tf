@@ -31,7 +31,7 @@ pipeline{
             steps{
                 echo params.selection
                 echo 'its time to apply'
-                sh 'terraform ${params.selection} --auto-approve'
+                sh """terraform '${params.selection}' --auto-approve"""
                 // sh 'rm -rf terraform.tfvars'
                 // why? tfvaes still stay in github
             }
