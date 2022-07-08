@@ -23,30 +23,31 @@ pipeline{
             }
         }
 
-        stage('terraform apply'){
-            when{
-                equlas expected: apply, actual: params.selection
-                }
+        stage('terraform apply/destroy'){
+            // when{
+            //     equlas expected: apply, actual: params.selection
+            //     }
             
             steps{
+                echo params.selection
                 echo 'its time to apply'
-                sh 'terraform apply --auto-approve'
+                sh 'terraform $params.selection --auto-approve'
                 // sh 'rm -rf terraform.tfvars'
                 // why? tfvaes still stay in github
             }
         }
         
-        stage('terraform destroy'){
-            when{
-                equlas expected: destroy, actual: params.selection
-                }
+        // stage('terraform destroy'){
+        //     when{
+        //         equlas expected: destroy, actual: params.selection
+        //         }
 
-            steps
-            {
-                echo 'im so bad that u dont like me anymore'
-                sh 'terraform destroy --auto-approve'
-            }
-        }
+        //     steps
+        //     {
+        //         echo 'im so bad that u dont like me anymore'
+        //         sh 'terraform destroy --auto-approve'
+        //     }
+        // }
     }
 
         post{
