@@ -20,7 +20,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
-module "create_s3_bucket_for_both_main_and_sub"{
+module "front_end_terraform"{
     source = "./modules/front_end"
     bucket_name = terraform.workspace == "default" ? "jamesbookinglet.link" : "${terraform.workspace}.jamesbookinglet.link"
     domain_name = terraform.workspace == "default" ? "jamesbookinglet.link" : "${terraform.workspace}.jamesbookinglet.link"
