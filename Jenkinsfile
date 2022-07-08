@@ -4,13 +4,13 @@ pipeline{
             terraform "terraform-bookinglet"
             }
 
-        docker{
-            image 'hashicorp/terraform:latest'
-            args '-u root:root'
-        }
+        // docker{
+        //     image 'hashicorp/terraform:latest'
+        //     args '-u root:root'
+        // }
 
     parameters {
-        booleanParam(name: 'destroy', defaultValue: false, description: 'would u want to destroy this terraform')
+        // booleanParam(name: 'destroy', defaultValue: false, description: 'would u want to destroy this terraform')
         choice(name: 'selection', choices:['apply','destroy'],description:'to select which process gonna pick')
 
     }
