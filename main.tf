@@ -31,6 +31,6 @@ module "front_end_terraform"{
     # environment = terraform.workspace
     zone_id = "Z07447952DDK3PDNX6NZV"
     //acm_certificate = var.acm_certificate
-    //certificate_arn = "arn:aws:acm:us-east-1:219392032829:certificate/6d9ab804-b45b-4086-8194-660bbb480572"
+    certificate_arn = "arn:aws:acm:us-east-1:219392032829:certificate/6d9ab804-b45b-4086-8194-660bbb480572"
     //certificate_arn1 = "arn:aws:acm:us-east-1:219392032829:certificate/6d9ab804-b45b-4086-8194-660bbb480572"
 }
