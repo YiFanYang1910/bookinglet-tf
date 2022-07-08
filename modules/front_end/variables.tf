@@ -15,6 +15,6 @@ variable "zone_id" {
 # variable "acm_certificate"{
 #     description = "certificate of this domain name"
 # }
-variable "certificate_arn1"{
-    description = "create in ACM"
-}
+# variable "certificate_arn1"{
+#     description = "create in ACM"
+# }
