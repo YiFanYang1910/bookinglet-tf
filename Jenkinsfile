@@ -18,8 +18,10 @@ pipeline{
     stages{
         stage('terraform init'){
             steps{
+                withAWS(credentials: 'terraform',region: 'ap-southeast-2'){
                 echo 'its time to go'
                 sh 'terraform init'
+                }
             }
         }
 
@@ -29,11 +31,13 @@ pipeline{
             //     }
             
             steps{
+                withAWS(credentials: 'terraform',region: 'ap-southeast-2'){
                 echo params.selection
                 echo 'its time to apply'
                 sh """terraform '${params.selection}' --auto-approve"""
                 // sh 'rm -rf terraform.tfvars'
                 // why? tfvaes still stay in github
+                }
             }
         }
         
