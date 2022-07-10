@@ -60,4 +60,16 @@ pipeline{
 //             }
 //         }
 
+         post {
+        always {
+            echo(message: 'i love jenkins')
+            emailext attachLog: true, body: ''' pipeline down''',subject: 'you had successful run',to: 'yang191094@gmail.com'
+                    }
+        failure {
+            echo(message: 'i dont love jenkins')
+            emailext attachLog: true, body: ''' sry u had failed to run this pipeline''',subject: 'you had sfailed run',to: 'ffls712@hotmail.com'
+         }
+ 
+    }
+
 }

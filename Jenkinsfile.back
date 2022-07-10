@@ -1,0 +1,79 @@
+pipeline {
+    agent any 
+
+    environment {
+        AWS_DEFAULT_REGION="ap-southeast-2" 
+        IMAGE_REPO_NAME="219392032829.dkr.ecr.ap-southeast-2.amazonaws.com/bookinglet-backend-test"
+        IMAGE_TAG="latest"
+    }
+
+    stages {
+        // stage ('git checkout') {
+        //     steps {
+        //         git branch: 'main', credentialsId: 'YiFanYang1910', url: 'https://github.com/YiFanYang1910/bookinglet2.git'
+        //     }
+            
+        // }
+
+        stage('npm install') {
+            steps {
+                dir('./back_end/'){
+                sh 'npm install' 
+                }
+            }    
+        }
+
+        stage('npm run dev') {
+            steps {
+                dir('./back_end/') {
+                    sh 'npm run dev'
+                }
+            }
+        }
+
+        //Build Docker image
+        stage('Building image') {
+            steps {
+                dir('./back_end/'){
+                    sh 'docker build -t bookingletbackend .'
+                }             
+            }
+        }
+
+        stage('Pushing to ECR') {
+            steps {
+                dir('./back_end/'){
+                    sh 'docker tag bookingletbackend:latest 219392032829.dkr.ecr.ap-southeast-2.amazonaws.com/bookinglet-backend-test:latest'
+                    sh 'docker push 219392032829.dkr.ecr.ap-southeast-2.amazonaws.com/bookinglet-backend-test:latest'
+                }  
+            }
+        }
+
+        stage('Deploy') {
+            steps{
+                dir('./back_end/'){
+                    withAWS(credentials: registryCredential, region: "${AWS_DEFAULT_REGION}") {
+                        script {
+                            sh 'chmod +x -R /var/lib/jenkins/workspace/bookingletBackend/back_end/script.sh'
+                            sh './script.sh'
+                            }
+                        }
+                    }     
+                }
+        }    
+
+    }
+
+     post {
+        always {
+            echo(message: 'i love jenkins')
+            emailext attachLog: true, body: ''' pipeline down''',subject: 'you had successful run',to: 'yang191094@gmail.com'
+                    }
+        failure {
+            echo(message: 'i dont love jenkins')
+            emailext attachLog: true, body: ''' sry u had failed to run this pipeline''',subject: 'you had sfailed run',to: 'ffls712@hotmail.com'
+         }
+ 
+    }
+
+}
