@@ -34,3 +34,11 @@ module "front_end_terraform"{
     certificate_arn = "arn:aws:acm:us-east-1:219392032829:certificate/6d9ab804-b45b-4086-8194-660bbb480572"
     //certificate_arn1 = "arn:aws:acm:us-east-1:219392032829:certificate/6d9ab804-b45b-4086-8194-660bbb480572"
 }
+
+module "back_end_terraform" {
+  source = "./modules/back_end"
+  ecs_name = "jamesbookingletecs"
+  ecr_name = "jamesbookingletecr"
+  security_group = "jamesbookingletsecgroup"
+  
+}
